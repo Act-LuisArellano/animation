@@ -160,9 +160,9 @@ export const Phase2Animation = ({ isActive }: { isActive: boolean }) => {
                         <P1DataIcon label="OLD TEST" isTest />
                     </div>
                 ))}
-                <div className="absolute test-stack test-stack-top z-10"><P2TestFileStack label="GROUP A" subLabel="Radiology" /></div>
-                <div className="absolute test-stack test-stack-center z-20"><P2TestFileStack label="GROUP B" subLabel="Pathology" /></div>
-                <div className="absolute test-stack test-stack-bottom z-10"><P2TestFileStack label="GROUP C" subLabel="Genomics" /></div>
+                <div className="absolute test-stack test-stack-top z-10"><P2TestFileStack label="GROUP A" subLabel="Open Q." /></div>
+                <div className="absolute test-stack test-stack-center z-20"><P2TestFileStack label="GROUP B" subLabel="Change S." /></div>
+                <div className="absolute test-stack test-stack-bottom z-10"><P2TestFileStack label="GROUP C" subLabel="Speech" /></div>
             </div>
 
             {/* MODEL CENTER */}
@@ -189,9 +189,9 @@ export const Phase2Animation = ({ isActive }: { isActive: boolean }) => {
 
             {/* SCORES */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="absolute score-item score-top z-10"><ScoreCard score="91.4%" label="Radiology" /></div>
-                <div className="absolute score-item score-center z-20"><ScoreCard score="94.2%" label="Pathology" /></div>
-                <div className="absolute score-item score-bottom z-10"><ScoreCard score="88.7%" label="Genomics" /></div>
+                <div className="absolute score-item score-top z-10"><ScoreCard score="91.4%" label="Open Q." /></div>
+                <div className="absolute score-item score-center z-20"><ScoreCard score="94.2%" label="Change S." /></div>
+                <div className="absolute score-item score-bottom z-10"><ScoreCard score="88.7%" label="Speech" /></div>
             </div>
 
         </div>
