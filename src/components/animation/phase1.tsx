@@ -25,13 +25,13 @@ export const Phase1Animation = ({ isActive }: { isActive: boolean }) => {
 
         const setText = (text: string) => {
             return gsap.timeline()
-                .to(stepTextRef.current, { opacity: 0, duration: 0.2 })
+                .to(stepTextRef.current, { opacity: 0, duration: 0.4 })
                 .set(stepTextRef.current, { textContent: text })
-                .to(stepTextRef.current, { opacity: 1, duration: 0.2 });
+                .to(stepTextRef.current, { opacity: 1, duration: 0.4 });
         };
 
         const ctx = gsap.context(() => {
-            const tl = gsap.timeline({ repeat: -1, repeatDelay: 2, paused: !isActive });
+            const tl = gsap.timeline({ repeat: -1, repeatDelay: 4, paused: !isActive });
             timelineRef.current = tl;
 
             // --- INITIAL SETUP ---
@@ -54,70 +54,70 @@ export const Phase1Animation = ({ isActive }: { isActive: boolean }) => {
             // --- SEQUENCE ---
             tl.addLabel('start')
                 .add(setText("1. Challenge Start: Public Dataset"))
-                .to('.data-item', { scale: 1, opacity: 1, stagger: 0.05, duration: 0.5, ease: "back.out(1.7)" })
-                .to('.json-tooltip', { opacity: 1, duration: 0.5 }, "-=0.5")
-                .to('.json-tooltip', { opacity: 0, duration: 0.5, delay: 0.5 })
+                .to('.data-item', { scale: 1, opacity: 1, stagger: 0.1, duration: 1, ease: "back.out(1.7)" })
+                .to('.json-tooltip', { opacity: 1, duration: 1 }, "-=0.5")
+                .to('.json-tooltip', { opacity: 0, duration: 1, delay: 1 })
 
                 .add(setText("2. Partitioning: Train vs Validation"))
-                .to('.train-item', { x: -200, y: 0, duration: 0.8, ease: "power2.inOut" }, "split")
-                .to('.test-item', { x: 100, y: 0, duration: 0.8, ease: "power2.inOut" }, "split")
+                .to('.train-item', { x: -200, y: 0, duration: 1.6, ease: "power2.inOut" }, "split")
+                .to('.test-item', { x: 100, y: 0, duration: 1.6, ease: "power2.inOut" }, "split")
                 .add(setText("3. Holding Validation Set"))
-                .to('.test-item', { opacity: 0, scale: 0, duration: 0.5, delay: 0.2 });
+                .to('.test-item', { opacity: 0, scale: 0, duration: 1, delay: 0.4 });
 
             tl.addLabel('training')
                 .add(setText("4. Base Model Initialization"))
-                .to(modelRef.current, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out" })
+                .to(modelRef.current, { scale: 1, opacity: 1, duration: 1, ease: "back.out" })
                 .add(setText("5. Training with Public Data"))
-                .to('.train-item', { x: 0, y: 0, scale: 0, opacity: 0, stagger: 0.1, duration: 0.6, ease: "power2.in" });
+                .to('.train-item', { x: 0, y: 0, scale: 0, opacity: 0, stagger: 0.2, duration: 1.2, ease: "power2.in" });
 
             tl.addLabel('finetuning')
                 .add(setText("6. Fine-Tuning: Domain Adaptation"))
-                .to(gearRef.current, { scale: 1, opacity: 1, rotation: 0, duration: 1.2, ease: "elastic.out(1, 0.7)" })
-                .to('.model-icon', { color: '#10b981', duration: 0.5 }, "<")
-                .to('.model-ring', { borderColor: '#10b981', duration: 0.5 }, "<")
-                .to(modelRef.current, { scale: 1.1, duration: 0.2, yoyo: true, repeat: 1 }, "<0.2")
+                .to(gearRef.current, { scale: 1, opacity: 1, rotation: 0, duration: 2.4, ease: "elastic.out(1, 0.7)" })
+                .to('.model-icon', { color: '#10b981', duration: 1 }, "<")
+                .to('.model-ring', { borderColor: '#10b981', duration: 1 }, "<")
+                .to(modelRef.current, { scale: 1.1, duration: 0.4, yoyo: true, repeat: 1 }, "<0.2")
                 .add(setText("Model Adaptation Complete"))
-                .to({}, { duration: 0.5 });
+                .to({}, { duration: 1 });
 
             tl.addLabel('prep')
                 .add(setText("7. Model Serialization"))
-                .to(modelRef.current, { x: 220, scale: 0.8, duration: 1, ease: "power2.inOut" });
+                .to(modelRef.current, { x: 220, scale: 0.8, duration: 2, ease: "power2.inOut" });
 
             tl.add(setText("8. Generating Submission Data"))
-                .to('.new-data-item', { scale: 1, opacity: 1, stagger: 0.1, duration: 0.5, ease: "back.out(1.7)" })
-                .to({}, { duration: 0.5 })
+                .to('.new-data-item', { scale: 1, opacity: 1, stagger: 0.2, duration: 1, ease: "back.out(1.7)" })
+                .to({}, { duration: 1 })
 
             tl.add(setText("9. Packaging Submission"))
-                .to(dropzoneFileRef.current, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)" })
-                .to('.new-data-item', { x: -180, y: -190, scale: 0.2, opacity: 0, stagger: 0.05, duration: 0.6, ease: "power2.in" }, "-=0.2")
-                .to(dropzoneFileRef.current, { scale: 1.1, duration: 0.1, yoyo: true, repeat: 1 });
+                .to(dropzoneFileRef.current, { opacity: 1, scale: 1, duration: 0.8, ease: "back.out(2)" })
+                .to('.new-data-item', { x: -180, y: -190, scale: 0.2, opacity: 0, stagger: 0.1, duration: 1.2, ease: "power2.in" }, "-=0.2")
+                .to(dropzoneFileRef.current, { scale: 1.1, duration: 0.2, yoyo: true, repeat: 1 });
 
             tl.add(setText("10. Simulating Evaluation Environment"))
                 .set(appUiRef.current, { display: 'flex' })
-                .to(appUiRef.current, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" })
+                .to(appUiRef.current, { opacity: 1, y: 0, duration: 1.6, ease: "power2.out" })
                 .add(setText("11. Ingesting Submission"))
-                .to(dropzoneFileRef.current, { y: -80, rotate: 0, duration: 0.8, ease: "bounce.out" })
+                .to(dropzoneFileRef.current, { y: -80, rotate: 0, duration: 1.6, ease: "bounce.out" })
 
                 .add(setText("12. Processing: Tuned Model Inference"))
                 .set(flowArrowRef.current, { x: -80, opacity: 0, scale: 0 })
                 .set('.arrow-inner', { rotation: 0 })
 
-                .to(flowArrowRef.current, { opacity: 1, scale: 1, duration: 0.5 })
-                .to(flowArrowRef.current, { x: 120, duration: 1.5, ease: "power1.inOut" })
+                .to(flowArrowRef.current, { opacity: 1, scale: 1, duration: 1 })
+                .to(flowArrowRef.current, { x: 120, duration: 3, ease: "power1.inOut" })
 
-                .to(modelRef.current, { scale: 0.9, duration: 0.4, yoyo: true, repeat: 1 })
+                .to(modelRef.current, { scale: 0.9, duration: 0.8, yoyo: true, repeat: 1 })
 
                 .add(setText("13. Generating Output Metrics"))
-                .to('.arrow-inner', { rotation: 180, duration: 0.3 })
-                .to('.flow-label', { textContent: "Score", duration: 0.1 }, "<")
-                .to(flowArrowRef.current, { x: -80, duration: 1.2, ease: "power1.inOut" })
-                .to(flowArrowRef.current, { opacity: 0, scale: 0, duration: 0.3 })
+                .to('.arrow-inner', { rotation: 180, duration: 0.6 })
+                .to('.flow-label', { textContent: "Score", duration: 0.2 }, "<")
+                .to(flowArrowRef.current, { x: -80, duration: 2.4, ease: "power1.inOut" })
+                .to(flowArrowRef.current, { opacity: 0, scale: 0, duration: 0.6 })
 
-                .to('.processing-bar', { width: '100%', duration: 0.5 })
-                .to(resultsRef.current, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out" })
-                .fromTo('.chart-bar', { scaleY: 0 }, { scaleY: 1, stagger: 0.1, duration: 0.5 }, "<")
+                .to('.processing-bar', { width: '100%', duration: 1 })
+                .to(resultsRef.current, { opacity: 1, scale: 1, duration: 1, ease: "back.out" })
+                .fromTo('.chart-bar', { scaleY: 0 }, { scaleY: 1, stagger: 0.2, duration: 1 }, "<")
 
-                .to(containerRef.current, { opacity: 0, duration: 1, delay: 3 });
+                .to(containerRef.current, { opacity: 0, duration: 2, delay: 6 });
 
         }, containerRef);
         return () => ctx.revert();

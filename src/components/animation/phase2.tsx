@@ -23,13 +23,13 @@ export const Phase2Animation = ({ isActive }: { isActive: boolean }) => {
 
         const setText = (text: string) => {
             return gsap.timeline()
-                .to(stepTextRef.current, { opacity: 0, duration: 0.2 })
+                .to(stepTextRef.current, { opacity: 0, duration: 0.4 })
                 .set(stepTextRef.current, { textContent: text })
-                .to(stepTextRef.current, { opacity: 1, duration: 0.2 });
+                .to(stepTextRef.current, { opacity: 1, duration: 0.4 });
         };
 
         const ctx = gsap.context(() => {
-            const tl = gsap.timeline({ repeat: -1, repeatDelay: 3, paused: !isActive });
+            const tl = gsap.timeline({ repeat: -1, repeatDelay: 6, paused: !isActive });
             timelineRef.current = tl;
 
             // --- INITIAL STATE ---
@@ -51,22 +51,22 @@ export const Phase2Animation = ({ isActive }: { isActive: boolean }) => {
 
             tl.addLabel('fine-tune-start')
                 .add(setText("1. Ingest Participant Submission"))
-                .to('.yellow-item', { scale: 1, opacity: 1, stagger: 0.1, duration: 0.5, ease: "back.out" })
+                .to('.yellow-item', { scale: 1, opacity: 1, stagger: 0.2, duration: 1, ease: "back.out" })
 
                 .add(setText("2. Init Base Model"))
-                .to(modelRef.current, { scale: 1, opacity: 1, duration: 0.5 }, "<")
-                .to('.yellow-item', { x: 0, y: 0, scale: 0.2, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power2.in" })
+                .to(modelRef.current, { scale: 1, opacity: 1, duration: 1 }, "<")
+                .to('.yellow-item', { x: 0, y: 0, scale: 0.2, opacity: 0, duration: 1.6, stagger: 0.2, ease: "power2.in" })
 
                 // --- STANDARDIZED FINE-TUNING ---
                 .add(setText("3. Fine-Tuning: Domain Adaptation"))
                 // Gear Appears
-                .to(gearRef.current, { scale: 1, opacity: 1, rotation: 0, duration: 1.2, ease: "elastic.out(1, 0.7)" })
+                .to(gearRef.current, { scale: 1, opacity: 1, rotation: 0, duration: 2.4, ease: "elastic.out(1, 0.7)" })
                 // Model becomes Green (and stays Green)
-                .to('.model-icon', { color: '#10b981', duration: 0.5 }, "<")
-                .to('.model-ring', { borderColor: '#10b981', duration: 0.5 }, "<")
+                .to('.model-icon', { color: '#10b981', duration: 1 }, "<")
+                .to('.model-ring', { borderColor: '#10b981', duration: 1 }, "<")
 
                 .add(setText("Model Adapted. Freezing Weights."))
-                .to(modelRef.current, { x: 0, scale: 0.9, duration: 0.8 });
+                .to(modelRef.current, { x: 0, scale: 0.9, duration: 1.6 });
 
             // ===========================================
             // PHASE 2: BLIND EVALUATION
@@ -74,16 +74,16 @@ export const Phase2Animation = ({ isActive }: { isActive: boolean }) => {
 
             tl.addLabel('step-6-recover')
                 .add(setText("4. Retrieving Blind Test Set"))
-                .to(modelRef.current, { x: 180, duration: 0.8, ease: "power2.inOut" })
+                .to(modelRef.current, { x: 180, duration: 1.6, ease: "power2.inOut" })
 
-                .to('.blue-train-item', { scale: 1, opacity: 1, stagger: 0.05, duration: 0.4 })
-                .to('.red-test-item-single', { scale: 1, opacity: 1, stagger: 0.05, duration: 0.4 }, "<")
+                .to('.blue-train-item', { scale: 1, opacity: 1, stagger: 0.1, duration: 0.8 })
+                .to('.red-test-item-single', { scale: 1, opacity: 1, stagger: 0.1, duration: 0.8 }, "<")
 
                 .add(setText("5. Partitioning Hidden Data"))
-                .to('.blue-train-item', { scale: 0.8, opacity: 0, y: 20, duration: 0.6 })
+                .to('.blue-train-item', { scale: 0.8, opacity: 0, y: 20, duration: 1.2 })
 
-                .to('.red-test-item-single', { x: -200, scale: 1, opacity: 0, duration: 0.8, ease: "power2.inOut" }, "<0.1")
-                .to('.test-stack', { scale: 1, opacity: 1, stagger: 0.1, duration: 0.5 }, "-=0.3");
+                .to('.red-test-item-single', { x: -200, scale: 1, opacity: 0, duration: 1.6, ease: "power2.inOut" }, "<0.1")
+                .to('.test-stack', { scale: 1, opacity: 1, stagger: 0.2, duration: 1 }, "-=0.3");
 
             // ===========================================
             // PHASE 3: INFERENCE (SLOWED DOWN)
@@ -91,17 +91,17 @@ export const Phase2Animation = ({ isActive }: { isActive: boolean }) => {
 
             tl.addLabel('inference')
                 .add(setText("6. Inference: Evaluation on Blind Data"))
-                .to(modelRef.current, { x: 0, duration: 0.8 })
+                .to(modelRef.current, { x: 0, duration: 1.6 })
 
                 .set(flowArrowRef.current, { x: -120, scale: 0, opacity: 0 })
                 // Slower entry arrow
-                .to(flowArrowRef.current, { x: -60, scale: 1, opacity: 1, duration: 1.0 })
+                .to(flowArrowRef.current, { x: -60, scale: 1, opacity: 1, duration: 2.0 })
 
                 // Slower processing pulse
-                .to('.model-icon', { scale: 1.1, duration: 0.4, yoyo: true, repeat: 3 })
+                .to('.model-icon', { scale: 1.1, duration: 0.8, yoyo: true, repeat: 3 })
 
                 // Slower exit arrow
-                .to(flowArrowRef.current, { x: 0, scale: 0, opacity: 0, duration: 0.8 });
+                .to(flowArrowRef.current, { x: 0, scale: 0, opacity: 0, duration: 1.6 });
 
             // ===========================================
             // PHASE 4: SCORING
@@ -109,18 +109,18 @@ export const Phase2Animation = ({ isActive }: { isActive: boolean }) => {
 
             tl.addLabel('split-results')
                 .add(setText("7. Calculating Metrics"))
-                .to('.score-center', { scale: 1, opacity: 1, x: 220, duration: 0.5, ease: "back.out" })
+                .to('.score-center', { scale: 1, opacity: 1, x: 220, duration: 1, ease: "back.out" })
 
                 .add(setText("8. Categorical Performance Report"))
-                .to('.test-stack-top', { y: -120, duration: 1, ease: "power3.out" })
-                .to('.test-stack-bottom', { y: 120, duration: 1, ease: "power3.out" }, "<")
-                .to('.score-top', { scale: 1, opacity: 1, x: 220, y: -120, duration: 1, ease: "power3.out" }, "<")
-                .to('.score-bottom', { scale: 1, opacity: 1, x: 220, y: 120, duration: 1, ease: "power3.out" }, "<")
-                .to('.stack-label', { opacity: 1, duration: 0.5 }, "<0.5")
-                .to('.test-stack', { x: -220, duration: 0.5 }, "<")
+                .to('.test-stack-top', { y: -120, duration: 2, ease: "power3.out" })
+                .to('.test-stack-bottom', { y: 120, duration: 2, ease: "power3.out" }, "<")
+                .to('.score-top', { scale: 1, opacity: 1, x: 220, y: -120, duration: 2, ease: "power3.out" }, "<")
+                .to('.score-bottom', { scale: 1, opacity: 1, x: 220, y: 120, duration: 2, ease: "power3.out" }, "<")
+                .to('.stack-label', { opacity: 1, duration: 1 }, "<0.5")
+                .to('.test-stack', { x: -220, duration: 1 }, "<")
 
                 .add(setText("Final Phase Evaluation Complete"))
-                .to(containerRef.current, { opacity: 0, delay: 3, duration: 1 });
+                .to(containerRef.current, { opacity: 0, delay: 6, duration: 2 });
 
         }, containerRef);
         return () => ctx.revert();
